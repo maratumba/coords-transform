@@ -1,0 +1,177 @@
+meta {
+  name: Transform Coordinates
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/transform
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "crs_from": "",
+    "crs_to": "",
+    "coordinates": []
+  }
+}
+
+example {
+  name: 200 Response
+  description: The result of the geocoding
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "crs_from": "",
+        "crs_to": "",
+        "coordinates": []
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "coordinates": []
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response
+  description: An error message describing what went wrong
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "crs_from": "",
+        "crs_to": "",
+        "coordinates": []
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "msg": ""
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 422 Response
+  description: Validation Error
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "crs_from": "",
+        "crs_to": "",
+        "coordinates": []
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 422
+      text: Unprocessable Entity
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "detail": [
+            {
+              "loc": [],
+              "msg": "",
+              "type": ""
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response
+  description: An error message describing what went wrong
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "crs_from": "",
+        "crs_to": "",
+        "coordinates": []
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "msg": ""
+        }
+      '''
+    }
+  }
+}
