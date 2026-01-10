@@ -1,0 +1,122 @@
+meta {
+  name: Query Crs
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/crs
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "query": ""
+  }
+}
+
+example {
+  name: 200 Response
+  description: Successful Response
+  
+  request: {
+    url: {{baseUrl}}/crs
+    method: GET
+    mode: json
+    body:json: {
+      {
+        "query": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "results": [
+            {
+              "$schema": "",
+              "type": "",
+              "name": "",
+              "datum": "",
+              "coordinateSystem": {
+                "subtype": "",
+                "axis": [
+                  {
+                    "name": "",
+                    "abbreviation": "",
+                    "direction": "",
+                    "unit": ""
+                  }
+                ],
+                "id": ""
+              },
+              "scope": "",
+              "area": "",
+              "bbox": "",
+              "id": "",
+              "remarks": "",
+              "baseCRS": "",
+              "conversion": "",
+              "components": ""
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 422 Response
+  description: Validation Error
+  
+  request: {
+    url: {{baseUrl}}/crs
+    method: GET
+    mode: json
+    body:json: {
+      {
+        "query": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 422
+      text: Unprocessable Entity
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "detail": [
+            {
+              "loc": [],
+              "msg": "",
+              "type": ""
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
