@@ -29,3 +29,6 @@ protocol = "tcp"
   grace_period = "1s"
   interval = "15s"
   timeout = "2s"
+
+[env]
+  ALLOWED_ORIGINS = "coordsinator.gulyamani.com"
