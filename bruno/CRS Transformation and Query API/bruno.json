@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "CRS Transformation and Query API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

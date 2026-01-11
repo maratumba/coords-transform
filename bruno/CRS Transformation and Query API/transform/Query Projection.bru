@@ -1,0 +1,129 @@
+meta {
+  name: Query Projection
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/transform
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "coordinates": [],
+    "query": "",
+    "crs_to": "EPSG:4326",
+    "crs_from_list": [],
+    "pagination": {
+      "page": 1,
+      "page_size": 10
+    },
+    "area_of_interest": null
+  }
+}
+
+example {
+  name: 200 Response
+  description: Successful Response
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "coordinates": [],
+        "query": "",
+        "crs_to": "",
+        "crs_from_list": "",
+        "pagination": "",
+        "area_of_interest": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "count": 0,
+          "results": [
+            {
+              "crs": {
+                "name": "",
+                "remarks": "",
+                "datum": "",
+                "area": "",
+                "datum_scope": "",
+                "scope": "",
+                "srs": "",
+                "crs_type": ""
+              },
+              "coordinates": "",
+              "success": false
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 422 Response
+  description: Validation Error
+  
+  request: {
+    url: {{baseUrl}}/transform
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "coordinates": [],
+        "query": "",
+        "crs_to": "",
+        "crs_from_list": "",
+        "pagination": "",
+        "area_of_interest": ""
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 422
+      text: Unprocessable Entity
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "detail": [
+            {
+              "loc": [],
+              "msg": "",
+              "type": ""
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
