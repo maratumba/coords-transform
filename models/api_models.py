@@ -47,9 +47,9 @@ class ProjectionResult(BaseModel):
     success: bool = True
 
     @staticmethod
-    def from_crs(crs: CRS, coordinates: Optional[List[List[float]]] = None) -> "ProjectionResult":
+    def from_crs(crs: CRS, coordinates: Optional[List[List[float]]] = None, success: bool = True) -> "ProjectionResult":
         crs = SimpleCrsModel.from_crs(crs)
-        return ProjectionResult(crs=crs, coordinates=coordinates, success=True)
+        return ProjectionResult(crs=crs, coordinates=coordinates, success=success)
 
 class QueryProjectionResponse(BaseModel):
     count: int

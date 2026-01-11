@@ -6,6 +6,7 @@ from itertools import islice
 
 import dotenv
 from fastapi import FastAPI, status, Depends
+from math import inf
 from pyproj import CRS, Transformer
 from pyproj.enums import PJType
 from pyproj.exceptions import CRSError, ProjError
@@ -86,10 +87,14 @@ def query_projection(
         try:
             transformer = Transformer.from_crs(crs_from, request.crs_to)
             out_coordinates = list(transformer.itransform(request.coordinates))
+            success = True
             if aoi and not coordinates_within_aoi(out_coordinates, request.area_of_interest.to_pj_area_of_interest()):
-                continue
-            results.append(ProjectionResult.from_crs(crs_from, coordinates=list(out_coordinates)))
-        except ProjError:
+                success = False
+            if inf in out_coordinates[0] or any(any(map(lambda v: v != v, coord)) for coord in out_coordinates):
+                success = False
+                out_coordinates = []
+            results.append(ProjectionResult.from_crs(crs_from, coordinates=list(out_coordinates), success=success))
+        except (ProjError, ValueError):
             results.append(ProjectionResult(success=False, crs=SimpleCrsModel.from_crs(crs_from), coordinates=[]))
 
     return QueryProjectionResponse(
